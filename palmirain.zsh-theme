@@ -1,5 +1,5 @@
-# BlackRain ZSH Theme
-# Author: Ed Heltzel @ginfuru
+# palmirain
+# Author: Lucas Cardozo @lecardozo
 # License: MIT
 
 __PROMPT_SYMBOL="❯"
@@ -130,7 +130,7 @@ __git_status() {
         s=" [${s}]";
     fi
 
-    echo -n " %Bon%b "
+    echo -ne " \0xEE\0x9C\0x89  "
     echo -n "%{$FG[239]%}\ue0a0 "
     echo -n "%{$reset_color%}"
     echo -n "%{$fg_bold[grey]%}"
@@ -179,7 +179,7 @@ __return_status() {
 
 # Compose PROMPT
 PROMPT='
-$(__current_dir)$(__git_status)$(__nvm_status)$(__venv_status) $(__return_status) '
+$(echo -e "\0xEF\0x88\0x9D") $(__current_dir)$(__git_status)$(__nvm_status)$(__venv_status) $(__return_status) '
 
 # Set PS2 - continuation interactive prompt
 PS2="%{$fg_bold[yellow]%}"
