@@ -65,7 +65,7 @@ __git_uncomitted() {
 # Check for unstaged changes.
 __git_unstaged() {
   if ! $(git diff-files --quiet --ignore-submodules --); then
-    echo -n '!'
+    echo -n "%{$fg_bold[yellow]%}!%{$fg[red]%}"
   fi
 }
 
@@ -121,7 +121,7 @@ __git_status() {
     local s=''
 
     s+="$(__git_uncomitted)"
-    #s+="$(__git_unstaged)"
+    s+="$(__git_unstaged)"
     s+="$(__git_untracked)"
     s+="$(__git_stashed)"
     s+="$(__git_unpushed_unpulled)"
