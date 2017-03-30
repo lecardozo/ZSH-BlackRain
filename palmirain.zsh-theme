@@ -17,9 +17,15 @@ __user() {
   if [[ $USER == 'root' ]]; then
     echo -n "%{$fg_bold[red]%}"
   else
-    echo -n "%{$fg_bold[yellow]%}"
+    echo -n "%{$fg_bold[grey]%}"
   fi
   echo -n "%n"
+  echo -n "%{$reset_color%}"
+  echo -n "%{$fg[white]%}"
+  echo -n "%B@%b"
+  echo -n "%{$reset_color%}"
+  echo -n "%{$fg_bold[grey]%}"
+  echo -n "%{$HOST%}"
   echo -n "%{$reset_color%}"
 }
 
@@ -42,7 +48,7 @@ __host() {
 # Current directory.
 # Return only the last 2 items of path
 __current_dir() {
-  echo -n "%{$fg_bold[cyan]%}"
+  echo -n "%{$fg_bold[magenta]%}"
   echo -n "%2~"
   echo    "%{$reset_color%}"
 }
@@ -115,17 +121,19 @@ __git_status() {
     local s=''
 
     s+="$(__git_uncomitted)"
-    s+="$(__git_unstaged)"
+    #s+="$(__git_unstaged)"
     s+="$(__git_untracked)"
     s+="$(__git_stashed)"
     s+="$(__git_unpushed_unpulled)"
 
-    [ -n "${s}" ] && s=" [${s}]";
+    if [ -n "${s}" ]; then
+        s=" [${s}]";
+    fi
 
     echo -n " %Bon%b "
     echo -n "%{$FG[239]%}\ue0a0 "
     echo -n "%{$reset_color%}"
-    echo -n "%{$fg_bold[magenta]%}"
+    echo -n "%{$fg_bold[grey]%}"
     echo -n "$(git_current_branch)"
     echo -n "%{$reset_color%}"
     echo -n "%{$fg_bold[red]%}"
@@ -166,12 +174,12 @@ __nvm_status() {
 __return_status() {
   echo -n "%(?.%{$fg[green]%}.%{$fg[red]%})"
   echo -n "%B${__PROMPT_SYMBOL}%b"
-  echo    "%{$reset_color%}"
+  echo -n "%{$reset_color%}"
 }
 
 # Compose PROMPT
 PROMPT='
-$(__host)$(__current_dir)$(__git_status)$(__nvm_status)$(__venv_status)
+$(__current_dir)$(__git_status)$(__nvm_status)$(__venv_status)
 $(__return_status) '
 
 # Set PS2 - continuation interactive prompt
@@ -180,4 +188,4 @@ PS2+="${__PROMPT_SYMBOL} "
 PS2+="%{$reset_color%}"
 
 # Customize to your needs...
-#RPROMPT='%{$fg[white]%}$(battery_pct_prompt)%{$reset_color%}' #add battery to plugins to get this to work
+# RPROMPT='%{$fg[white]%}$(battery_pct_prompt)%{$reset_color%}' #add battery to plugins to get this to work
