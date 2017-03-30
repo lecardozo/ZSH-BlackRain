@@ -179,8 +179,7 @@ __return_status() {
 
 # Compose PROMPT
 PROMPT='
-$(__current_dir)$(__git_status)$(__nvm_status)$(__venv_status)
-$(__return_status) '
+$(__current_dir)$(__git_status)$(__nvm_status)$(__venv_status) $(__return_status) '
 
 # Set PS2 - continuation interactive prompt
 PS2="%{$fg_bold[yellow]%}"
