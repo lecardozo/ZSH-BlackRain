@@ -168,6 +168,13 @@ __nvm_status() {
   echo -n "%{$reset_color%}"
 }
 
+__wrapornot () {
+  if [ $(tput cols) -lt 100 ];then
+    echo "
+    "
+  fi 
+}
+
 # Command prompt.
 # Pain $PROMPT_SYMBOL in red if previous command was fail and
 # pain in green if all OK.
@@ -177,9 +184,11 @@ __return_status() {
   echo -n "%{$reset_color%}"
 }
 
+setopt prompt_subst
+
 # Compose PROMPT
-PROMPT='
-$(echo -e "\0xEF\0x88\0x9D") $(__current_dir)$(__git_status)$(__nvm_status)$(__venv_status) $(__return_status) '
+PROMPT='$(echo -e "\0xEF\0x88\0x9D") $(__current_dir)$(__git_status)$(__nvm_status)$(__venv_status)$(__wrapornot) $(__return_status) '
+    
 
 # Set PS2 - continuation interactive prompt
 PS2="%{$fg_bold[yellow]%}"
