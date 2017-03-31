@@ -168,8 +168,12 @@ __nvm_status() {
   echo -n "%{$reset_color%}"
 }
 
+
 __wrapornot () {
-  if [ $(tput cols) -lt 60 ];then
+  horizrel=$(xrandr |grep "*" -m 1|cut -d ' ' -f 4|sed 's/x.*//')
+  cols=$(tput cols)
+  horiz=$(echo "($cols/$horizrel)*1000" | bc -l)
+  if [ $(echo "$horiz<60" | bc) -eq 1 ];then
     echo "
  "
   fi 
