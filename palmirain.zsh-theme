@@ -169,9 +169,9 @@ __nvm_status() {
 }
 
 __wrapornot () {
-  if [ $(tput cols) -lt 100 ];then
+  if [ $(tput cols) -lt 60 ];then
     echo "
-    "
+ "
   fi 
 }
 
